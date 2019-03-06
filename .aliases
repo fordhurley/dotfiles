@@ -21,21 +21,22 @@ alias l='ls'
 alias ls='ls -G'
 alias grep='grep --color'
 alias egrep='egrep --color'
-alias Grep='grep' # because i always hold shift after pipe and it's annoying (thanks, Caitlin)
 alias tree='tree -C'
 
+# Because I always hold shift after pipe and it's annoying (thanks, Caitlin!)
+alias Grep='grep'
+
+# Idiot guard:
 alias rm='rm -i'
 
-# git
+# https://github.com/github/hub
 alias git=hub
+# The most frequent command I type deserves to be one character:
 alias g=git
-# tell bash completion about this alias
+# Tell bash completion about this alias:
 __git_complete g __git_main
 
-# docker
 alias dc=docker-compose
-alias docker-env='eval "$(docker-machine env default)"'
-alias docker-unenv='unset $(env | grep DOCKER | cut -d = -f 1)'
 
 # Trim new lines and copy to clipboard
 #alias c="tr -d '\n' | pbcopy"
