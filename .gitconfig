@@ -1,0 +1,79 @@
+[user]
+    name = Ford Hurley
+    email = ford.hurley@gmail.com
+
+[core]
+    editor = vim
+    # Make `git rebase` safer on OS X
+    # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+    trustctime = false
+    excludesfile = ~/.gitignore
+    ignoreCase = false
+
+[alias]
+    a = add -p
+    ci = commit -v
+    cia = commit -v --amend
+    uncommit = reset --soft HEAD^
+    unamend = reset --soft HEAD@{1}
+    unstage = reset HEAD
+    d = diff
+    dc = diff --cached
+    co = checkout
+    ll = log --name-status --color
+    # https://www.kernel.org/pub/software/scm/git/docs/git-log.html#_pretty_formats
+    lg = log --graph --pretty=format:'%C(yellow)%h %Creset%s %Cblue[%cn]%Cred%d'
+    ls = log --pretty=format:'%C(yellow)%h %Creset%s %Cblue[%cn]%Cred%d'
+    l = !git ls -n 10
+    s = status -sb
+    b = branch --list -v
+    tags = show-ref --tags
+    pff = pull --ff-only
+    prb = pull --rebase
+    delete-merged-branches = "!git checkout master && git branch --merged | grep -v '\\*\\|master' | xargs -n 1 git branch -d"
+
+[color]
+    ui = true
+
+[color "diff"]
+    meta = cyan
+    frag = magenta
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = green
+    changed = red
+    untracked = cyan
+
+[push]
+    default = simple
+
+[merge]
+    ff = false
+
+[credential]
+    helper = osxkeychain
+
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+
+[github]
+	user = fordhurley
+
+[ghi]
+	token = !security find-internet-password -a fordhurley -s github.com -l 'ghi token' -w
+
+[http]
+	cookiefile = /Users/ford/.gitcookies
+
+[pager]
+	diff = diff-so-fancy | less --tabs=1,5 -RFX
+	show = diff-so-fancy | less --tabs=1,5 -RFX
+
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process

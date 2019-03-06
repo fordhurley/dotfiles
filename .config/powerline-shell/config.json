@@ -1,0 +1,16 @@
+{
+  "mode": "flat",
+  "theme": "~/Documents/dotfiles/powerline-shell/theme.py",
+  "segments": [
+    "time",
+    "virtual_env",
+    "ssh",
+    "cwd",
+    "git",
+    "jobs",
+    "root"
+  ],
+  "cwd": {
+    "mode": "plain"
+  }
+}

@@ -1,0 +1,103 @@
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
+else # OS X `ls`
+    colorflag="-G"
+fi
+# Always use color output for `ls`
+alias ls="command ls ${colorflag}"
+export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:'
+
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+alias ll='ls -AlhGF'
+alias l='ls'
+alias ls='ls -G'
+alias grep='grep --color'
+alias egrep='egrep --color'
+alias Grep='grep' # because i always hold shift after pipe and it's annoying (thanks, Caitlin)
+alias tree='tree -C'
+
+alias rm='rm -i'
+
+# git
+alias git=hub
+alias g=git
+# tell bash completion about this alias
+__git_complete g __git_main
+
+# docker
+alias dc=docker-compose
+alias docker-env='eval "$(docker-machine env default)"'
+alias docker-unenv='unset $(env | grep DOCKER | cut -d = -f 1)'
+
+# Trim new lines and copy to clipboard
+#alias c="tr -d '\n' | pbcopy"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes | map dirname
+alias map="xargs -n1"
+
+# Prints out a random uuid (version 4)
+alias uuid="uuidgen | tr '[:upper:]' '[:lower:]'"
+
+alias bp='bpython'
+
+# Serve the current directory. Usage: serve [port]
+alias serve='python -m SimpleHTTPServer'
+
+# Create a new directory and enter it
+function mkd() {
+    mkdir -p "$@" && cd "$@";
+}
+
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')";
+}
+
+# Lorem ipsum text. Optional argument is the number of sentences to
+# produce. Each sentence will be separated by an empty line.
+# Requires `pip install fake-factory`.
+function lorem() {
+    local repeat=$1
+    if [[ -n $repeat ]]; then
+        repeat="-r $repeat"
+    fi
+    PYTHONIOENCODING=UTF-8 python -m faker text $repeat
+}
+
+function pbpipe() {
+    local cmd=$@
+    >&2 echo "pbpaste | $cmd | pbcopy"
+    pbpaste | $cmd | pbcopy
+}
+
+# Aliases for working with the Q log file produced
+# by the golang library github.com/y0ssar1an/q.
+qq() {
+    logpath="$TMPDIR/q"
+    if [[ -z "$TMPDIR" ]]; then
+        logpath="/tmp/q"
+    fi
+
+    if [[ ! -f "$logpath" ]]; then
+        echo 'Q LOG' > "$logpath"
+    fi
+
+    tail -100f -- "$logpath"
+}
+
+rmqq() {
+    if [[ -f "$TMPDIR/q" ]]; then
+        rm "$TMPDIR/q"
+    fi
+    qq
+}
