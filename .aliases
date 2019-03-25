@@ -100,5 +100,4 @@ rmqq() {
     if [[ -f "$TMPDIR/q" ]]; then
         rm "$TMPDIR/q"
     fi
-    qq
 }
