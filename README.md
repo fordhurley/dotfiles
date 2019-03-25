@@ -4,12 +4,15 @@ ford's dotfiles
 Run `./link.sh` to add symlinks to `$HOME`.
 
 
-Brewfile
+Homebrew
 ---------
 
-`Brewfile` was manually created and has been partially maintained with packages
-I install on new machines. `Brewfile.gen` was created recently by running
-`brew bundle dump --file=./Brewfile.gen`.
+`Brewfile` is generated with
+
+    brew bundle dump --force --file=./Brewfile
+
+`brew.sh` is my manually maintained script for setting up a new machine (at
+least as a guide or copypasta source).
 
 
 powerline-shell
