@@ -9,7 +9,7 @@ Brewfile
 
 `Brewfile` was manually created and has been partially maintained with packages
 I install on new machines. `Brewfile.gen` was created recently by running
-`brew bundle dump`.
+`brew bundle dump --file=./Brewfile.gen`.
 
 
 powerline-shell
